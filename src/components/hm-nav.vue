@@ -1,5 +1,5 @@
 <template>
-  <div class="hm-nav">
+  <div class="hm-nav" @click="handleClick">
     <div class="left">{{name}}</div>
     <div class="center">{{desc}}</div>
     <div class="right">
@@ -11,6 +11,11 @@
 <script>
 export default {
   props: ['name', 'desc'],
+  methods: {
+    handleClick(e) {
+      this.$emit('click', e)
+    },
+  },
 }
 </script>
 

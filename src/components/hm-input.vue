@@ -7,6 +7,7 @@
       @input="handleInput"
       :value="value"
       :class="[status]"
+      @keyup="handleKeyup"
     />
     <span class="tips" v-show="showTips">{{errMsg}}</span>
   </div>
@@ -49,6 +50,9 @@ export default {
       } else {
         this.status = 'error'
       }
+    },
+    handleKeyup(e) {
+      this.$emit('keyup', e)
     },
   },
   computed: {

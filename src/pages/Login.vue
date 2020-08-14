@@ -18,6 +18,7 @@
         v-model="password"
         :rules="passRules"
         err-msg="请输入正确格式的密码(3-11位字符)"
+        @keyup.enter="login"
       ></hm-input>
     </div>
     <div class="hm-login">
@@ -71,6 +72,9 @@ export default {
       const { statusCode, message } = res.data
       if (statusCode === 200) {
         this.$toast.success(message)
+        const { token, user } = res.data.data
+        localStorage.setItem('token', token)
+        localStorage.setItem('user_id', user.id)
         this.$router.push({
           name: 'profile',
         })
