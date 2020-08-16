@@ -1,5 +1,12 @@
 <template>
   <div class="profile">
+    <hm-header>
+      <template v-slot:left>
+        <i class="iconfont iconicon-test" @click="$router.push('/home')"></i>
+      </template>
+      个人中心
+    </hm-header>
+    <div class="box"></div>
     <!-- 头部信息 -->
     <div class="user-info" @click="$router.push('/edit-profile')">
       <!-- 头像 -->
@@ -22,9 +29,9 @@
     </div>
     <!-- 下面列表 -->
     <div class="list">
-      <hm-nav name="我的关注" desc="关注的用户"></hm-nav>
-      <hm-nav name="我的跟帖" desc="跟帖/回复"></hm-nav>
-      <hm-nav name="我的收藏" desc="文章/视频"></hm-nav>
+      <hm-nav name="我的关注" desc="关注的用户" @click="$router.push('/follow')"></hm-nav>
+      <hm-nav name="我的跟帖" desc="跟帖/回复" @click="$router.push('/comments')"></hm-nav>
+      <hm-nav name="我的收藏" desc="文章/视频" @click="$router.push('/my-favorite')"></hm-nav>
       <hm-nav name="设置" @click="$router.push('/edit-profile')"></hm-nav>
     </div>
     <!-- 退出按钮 -->
@@ -35,7 +42,11 @@
 </template>
 
 <script>
+import HmHeader from 'components/hm-header.vue'
 export default {
+  components: {
+    HmHeader,
+  },
   data() {
     return {
       profile: {},
@@ -76,6 +87,9 @@ export default {
 
 <style lang='less' scoped>
 .profile {
+  .box {
+    height: 50px;
+  }
   height: 100vh;
   background-color: #f2f2f2;
   .user-info {
@@ -87,6 +101,10 @@ export default {
       height: 70px;
       border-radius: 50%;
       overflow: hidden;
+      img {
+        width: 100%;
+        height: 100%;
+      }
     }
     .info {
       flex: 1;

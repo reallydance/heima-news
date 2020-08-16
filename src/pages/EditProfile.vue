@@ -1,7 +1,7 @@
 <template>
   <div class="edit-profile">
     <hm-header>编辑资料</hm-header>
-
+    <div class="box"></div>
     <!-- 头像 -->
     <div class="avatar">
       <img :src="imgSrc" />
@@ -97,11 +97,7 @@ export default {
   methods: {
     async getProfile() {
       const userId = localStorage.getItem('user_id')
-      const res = await this.$axios.get(`/user/${userId}`, {
-        headers: {
-          Authorization: localStorage.getItem('token'),
-        },
-      })
+      const res = await this.$axios.get(`/user/${userId}`)
       const { statusCode, data } = res.data
       if (statusCode === 200) {
         this.profile = data
@@ -184,6 +180,9 @@ export default {
 .edit-profile {
   height: 100vh;
   background-color: #f2f2f2;
+  .box {
+    height: 50px;
+  }
   .avatar {
     padding: 30px 0;
     text-align: center;

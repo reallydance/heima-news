@@ -20,9 +20,14 @@ export default {}
 
 <style lang='less' scoped>
 .hm-header {
+  width: 100%;
   height: 50px;
   line-height: 50px;
   display: flex;
+  position: fixed;
+  z-index: 10;
+  top: 0;
+  background-color: #f2f2f2;
   .left,
   .right {
     height: 50px;

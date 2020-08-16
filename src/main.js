@@ -6,15 +6,18 @@ import './styles/base.css'
 import './styles/iconfont.css'
 import axios from 'axios'
 import HmButton from 'components/hm-button.vue'
-import { Toast, Dialog, Button, Field, RadioGroup, Radio, Uploader } from 'vant'
+import { Toast, Dialog, Button, Field, RadioGroup, Radio, Uploader, List, Tab, Tabs, PullRefresh } from 'vant'
 import HmNav from 'components/hm-nav.vue'
 import moment from 'moment'
 
 Vue.config.productionTip = false
 Vue.prototype.$axios = axios
 axios.defaults.baseURL = 'http://localhost:3000'
-Vue.filter('time', function (value) {
-  return moment(value).format('YYYY-MM-DD')
+Vue.filter('time', function (value, str = 'YYYY-MM-DD') {
+  return moment(value).format(str)
+})
+Vue.filter('fixUrl', function (value) {
+  return axios.defaults.baseURL + value
 })
 Vue.use(Toast)
 Vue.use(Dialog)
@@ -23,8 +26,13 @@ Vue.use(Field)
 Vue.use(RadioGroup)
 Vue.use(Radio)
 Vue.use(Uploader)
+Vue.use(List)
+Vue.use(Tab)
+Vue.use(Tabs)
+Vue.use(PullRefresh)
 Vue.component('HmNav', HmNav)
 Vue.component('HmButton', HmButton)
+
 axios.interceptors.request.use(function (config) {
   const token = localStorage.getItem('token')
   if (token) {

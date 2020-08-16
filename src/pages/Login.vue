@@ -1,6 +1,6 @@
 <template>
   <div class="login">
-    <i class="iconfont iconicon-test"></i>
+    <i class="iconfont iconicon-test" @click="$router.push('/home')"></i>
     <i class="iconfont iconnew"></i>
     <div class="username">
       <hm-input
@@ -76,7 +76,7 @@ export default {
         localStorage.setItem('token', token)
         localStorage.setItem('user_id', user.id)
         this.$router.push({
-          name: 'profile',
+          name: 'home',
         })
       }
       if (statusCode === 401) {
