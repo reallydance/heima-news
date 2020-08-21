@@ -5,7 +5,7 @@
       <div class="left">
         <i class="iconfont iconnew"></i>
       </div>
-      <div class="search">
+      <div class="search" @click="$router.push('/search')">
         <i class="iconfont iconsearch"></i>
         <span>搜索新闻</span>
       </div>
@@ -15,16 +15,18 @@
     </div>
     <van-tabs v-model="active" sticky animated swipeable>
       <van-tab :title="item.name" v-for="item  in tabList" :key="item.id">
-        <van-list
-          v-model="item.loading"
-          :finished="item.finished"
-          :immediate-check="false"
-          finished-text="没有更多了"
-          :offset="50"
-          @load="onLoad"
-        >
-          <hm-post v-for="post in item.posts" :key="post.id" :post="post"></hm-post>
-        </van-list>
+        <van-pull-refresh v-model="item.refreshing" @refresh="onRefresh">
+          <van-list
+            v-model="item.loading"
+            :finished="item.finished"
+            :immediate-check="false"
+            finished-text="没有更多了"
+            :offset="50"
+            @load="onLoad"
+          >
+            <hm-post v-for="post in item.posts" :key="post.id" :post="post"></hm-post>
+          </van-list>
+        </van-pull-refresh>
       </van-tab>
     </van-tabs>
   </div>
@@ -44,7 +46,19 @@ export default {
     }
   },
   async created() {
-    await this.getTabList()
+    const activeTabs = JSON.parse(localStorage.getItem('activeTabs'))
+    if (activeTabs) {
+      activeTabs.forEach((item) => {
+        item.posts = []
+        item.pageIndex = 1
+        item.loading = false
+        item.finished = false
+        item.refreshing = false
+      })
+      this.tabList = activeTabs
+    } else {
+      await this.getTabList()
+    }
     this.getPostList()
   },
   methods: {
@@ -57,6 +71,7 @@ export default {
           item.pageIndex = 1
           item.loading = false
           item.finished = false
+          item.refreshing = false
         })
         this.tabList = data
       }
@@ -85,6 +100,18 @@ export default {
       const index = this.active
       this.tabList[index].pageIndex++
       this.getPostList()
+    },
+    onRefresh() {
+      setTimeout(async () => {
+        const index = this.active
+        this.tabList[index].posts = []
+        this.tabList[index].pageIndex = 1
+        this.tabList[index].loading = false
+        this.tabList[index].finished = false
+        await this.getPostList()
+        this.tabList[index].refreshing = false
+        this.$toast('刷新成功')
+      }, 1000)
     },
   },
   watch: {

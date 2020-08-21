@@ -32,6 +32,7 @@
       <hm-nav name="我的关注" desc="关注的用户" @click="$router.push('/follow')"></hm-nav>
       <hm-nav name="我的跟帖" desc="跟帖/回复" @click="$router.push('/comments')"></hm-nav>
       <hm-nav name="我的收藏" desc="文章/视频" @click="$router.push('/my-favorite')"></hm-nav>
+      <hm-nav name="栏目管理" @click="$router.push('/tab-manage')"></hm-nav>
       <hm-nav name="设置" @click="$router.push('/edit-profile')"></hm-nav>
     </div>
     <!-- 退出按钮 -->

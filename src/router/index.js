@@ -8,6 +8,10 @@ import Follow from 'pages/Follow.vue'
 import MyComments from 'pages/myComments.vue'
 import MyFavorite from 'pages/MyFavorite.vue'
 import Home from 'pages/Home.vue'
+import PostDetail from 'pages/PostDetail.vue'
+import TabManage from 'pages/TabManage.vue'
+import Search from 'pages/Search.vue';
+
 Vue.use(VueRouter)
 
 const routes = [
@@ -19,7 +23,27 @@ const routes = [
   { path: '/follow', name: 'follow', component: Follow },
   { path: '/comments', name: 'comments', component: MyComments },
   { path: '/my-favorite', name: 'my-favorite', component: MyFavorite },
-  { path: '/home', name: 'home', component: Home },
+  {
+    path: '/home',
+    name: 'home',
+    component: Home,
+    meta: {
+      keepAlive: true,
+      title: '首页'
+    }
+  },
+  { path: '/post-detail/:id', name: 'post-detail', component: PostDetail },
+  { path: '/tab-manage', name: 'tab-manage', component: TabManage },
+  {
+    path: '/search',
+    name: 'search',
+    component: Search,
+    meta: {
+      keepAlive: true,
+      title: '搜索页'
+    }
+  },
+
 ]
 const originalPush = VueRouter.prototype.push
 // 解决Vue-Router升级导致的Uncaught(in promise) navigation guard问题
